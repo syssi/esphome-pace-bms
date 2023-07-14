@@ -1,0 +1,638 @@
+substitutions:
+  name: pace-bms
+  device_description: "Monitor and control a PACE BMS via RS485 (Modbus)"
+  tx_pin: GPIO16
+  rx_pin: GPIO17
+
+esphome:
+  name: ${name}
+  comment: ${device_description}
+  project:
+    name: "syssi.esphome-pace-bms"
+    version: 1.0.0
+
+esp32:
+  board: wemos_d1_mini32
+  framework:
+    type: esp-idf
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+
+logger:
+  level: DEBUG
+
+# If you use Home Assistant please remove this `mqtt` section and uncomment the `api` component!
+# The native API has many advantages over MQTT: https://esphome.io/components/api.html#advantages-over-mqtt
+mqtt:
+  broker: !secret mqtt_host
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  id: mqtt_client
+
+# api:
+
+uart:
+  - id: uart_0
+    baud_rate: 9600
+    tx_pin: ${tx_pin}
+    rx_pin: ${rx_pin}
+    debug:
+      direction: BOTH
+      dummy_receiver: false
+
+modbus:
+  - id: modbus0
+    uart_id: uart_0
+    send_wait_time: 200ms
+
+modbus_controller:
+  - id: bms0
+    # Slave address 0x01
+    address: 0x01
+    modbus_id: modbus0
+    command_throttle: 200ms
+    update_interval: 10s
+
+binary_sensor:
+#  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
+#      -> Bit 8: Status: Charging enabled/disabled
+#      -> Bit 9: Status: Discharging enabled/disabled
+
+sensor:
+  #   0  Current                               2 byte   R   int16  10mA (Positive: chargingm Negative: discharging)
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} current"
+    address: 0
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  #   1  Voltage of pack                       2 byte   R  uint16  10mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} total voltage"
+    address: 1
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} power"
+    address: 0
+    register_type: holding
+    value_type: U_WORD
+    register_count: 2
+    response_size: 4
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 2
+    lambda: |-
+      if (data.size() < 4) {
+        return NAN;
+      }
+      float current = (int16_t)(data[0] << 8 | data[1] << 0);
+      float total_voltage = (uint16_t)(data[2] << 8 | data[3] << 0);
+      return current * total_voltage * 0.0001f;
+
+  #   2  State of charge                       2 byte   R   uint8  % (0-100%)
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} state of charge"
+    address: 2
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "%"
+    device_class: battery
+    state_class: measurement
+    accuracy_decimals: 0
+
+  #   3  SOH                                   2 byte   R   uint8  % (0-100%)
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} state of health"
+    address: 3
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "%"
+    state_class: measurement
+    accuracy_decimals: 0
+
+  #   4  Remain capacity                       2 byte   R  uint16  10mAH
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} remaining capacity"
+    address: 4
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "Ah"
+    state_class: measurement
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  #   5  Full capacity                         2 byte   R  uint16  10mAH
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} Full capacity"
+    address: 5
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "Ah"
+    state_class: measurement
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  #   6  Design capacity                       2 byte   R  uint16  10mAH
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} Design capacity"
+    address: 6
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "Ah"
+    state_class: measurement
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  #   7  Charging cycles count                 2 byte   R  uint16  Cyc.
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} charging cycles"
+    address: 7
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
+
+  #   9  Warning flag                          2 byte   R  uint16  Hex See ^1
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} warnings bitmask"
+    address: 9
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
+
+  #  10  Protection flag                       2 byte   R  uint16  Hex See ^2
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} protection bitmask"
+    address: 10
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
+
+  #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} errors bitmask"
+    address: 11
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
+
+  #  12  Balance status                        2 byte   R  uint16  Hex
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} balancer status"
+    address: 12
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
+
+  #  15  Cell voltage 1                        2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 1"
+    address: 15
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  16  Cell voltage 2                        2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 2"
+    address: 16
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  17  Cell voltage 3                        2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 3"
+    address: 17
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  18  Cell voltage 4                        2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 4"
+    address: 18
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  19  Cell voltage 5                        2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 5"
+    address: 19
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  20  Cell voltage 6                        2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 6"
+    address: 20
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  21  Cell voltage 7                        2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 7"
+    address: 21
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  22  Cell voltage 8                        2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 8"
+    address: 22
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  23  Cell voltage 9                        2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 9"
+    address: 23
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  24  Cell voltage 10                       2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 10"
+    address: 24
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  25  Cell voltage 11                       2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 11"
+    address: 25
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  26  Cell voltage 12                       2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 12"
+    address: 26
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  27  Cell voltage 13                       2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 13"
+    address: 27
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  28  Cell voltage 14                       2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 14"
+    address: 28
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  29  Cell voltage 15                       2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 15"
+    address: 29
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  30  Cell voltage 16                       2 byte   R  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell voltage 16"
+    address: 30
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "V"
+    state_class: measurement
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  #  31  Battery temperature 1                 2 byte   R   int16  0.1 ℃
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} Cell temperature 1"
+    address: 31
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "˚C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  #  32  Battery temperature 2                 2 byte   R   int16  0.1 ℃
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} battery temperature 1"
+    address: 32
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "˚C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  #  33  Battery temperature 3                 2 byte   R   int16  0.1 ℃
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} battery temperature 2"
+    address: 33
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "˚C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  #  34  Battery temperature 4                 2 byte   R   int16  0.1 ℃
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} battery temperature 3"
+    address: 34
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "˚C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  #  35  MOSFET temperature                    2 byte   R   int16  0.1 ℃ or invalid
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} mosfet temperature"
+    address: 35
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "˚C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  #  36  Environment temperature               2 byte   R   int16  0.1 ℃ or invalid
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} environment temperature"
+    address: 36
+    register_type: holding
+    value_type: S_WORD
+    unit_of_measurement: "˚C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+number:
+  #  60  Pack OV alarm                         2 byte  RW  uint16  mV
+  #  61  Pack OV protection                    2 byte  RW  uint16  mV
+  #  62  Pack OV release protection            2 byte  RW  uint16  mV
+  #  63  Pack OV protection delay time         2 byte  RW  uint8   0.1S 1~255
+  #  64  Cell OV alarm                         2 byte  RW  uint16  mV
+  #  65  Cell OV protection                    2 byte  RW  uint16  mV
+  #  66  Cell OV release protection            2 byte  RW  uint16  mV
+  #  67  Cell OV protection delay time         2 byte  RW   uint8  0.1S 1~255
+  #  68  Pack UV alarm                         2 byte  RW  uint16  mV
+  #  69  Pack UV protection                    2 byte  RW  uint16  mV
+  #  70  Pack UV release protection            2 byte  RW  uint16  mV
+  #  71  Pack UV protection delay time         2 byte  RW   uint8  0.1S 1~255
+  #  72  Cell UV alarm                         2 byte  RW  uint16  mV
+  #  73  Cell UV protection                    2 byte  RW  uint16  mV
+  #  74  Cell UV release protection            2 byte  RW  uint16  mV
+  #  75  Cell UV protection delay time         2 byte  RW   uint8  0.1S 1~255
+  #  76  Charging OC alarm                     2 byte  RW  uint16  A
+  #  77  Charging OC protection                2 byte  RW  uint16  A
+  #  78  Charging OC protection delay time     2 byte  RW   uint8  0.1S 1~255
+  #  79  Discharging OC alarm                  2 byte  RW  uint16  A
+  #  80  Discharging OC protection             2 byte  RW  uint16  A
+  #  81  Discharging OC protection delay time  2 byte  RW   uint8  0.1S 1~255
+  #  82  Discharging OC protection             2 byte  RW  uint16
+  #  83  Discharging OC protection delay time  2 byte  RW   uint8  0.025S 1~255
+  #  84  Charging OT alarm                     2 byte  RW   int16  0.1 ℃
+  #  85  Charging OT protection                2 byte  RW   int16  0.1 ℃
+  #  86  Charging OT release protection        2 byte  RW   int16  0.1 ℃
+  #  87  Discharging OT alarm                  2 byte  RW   int16  0.1 ℃
+  #  88  Discharging OT protection             2 byte  RW   int16  0.1 ℃
+  #  89  Discharging OT release                2 byte  RW   int16  0.1 ℃
+  #  90  Charging UT alarm                     2 byte  RW   int16  0.1 ℃
+  #  91  Charging UT protection                2 byte  RW   int16  0.1 ℃
+  #  92  Charging UT release protection        2 byte  RW   int16  0.1 ℃
+  #  93  Discharging UT alarm                  2 byte  RW   int16  0.1 ℃
+  #  94  Discharging UT protection             2 byte  RW   int16  0.1 ℃
+  #  95  Discharging UT release protection     2 byte  RW   int16  0.1 ℃
+  #  96  MOSFET OT alarm                       2 byte  RW   int16  0.1 ℃ or invalid parameters in BMS-4820
+  #  97  MOSFET OT protection                  2 byte  RW   int16  0.1 ℃
+  #  98  MOSFET OT release protection          2 byte  RW   int16  0.1 ℃
+  #  99  Environment OT alarm                  2 byte  RW   int16  0.1 ℃
+  # 100  Environment OT protection             2 byte  RW   int16  0.1 ℃
+  # 101  Environment OT release protection     2 byte  RW   int16  0.1 ℃
+  # 102  Environment UT alarm                  2 byte  RW   int16  0.1 ℃
+  # 103  Environment UT protection             2 byte  RW   int16  0.1 ℃
+  # 104  Environment UT release protection     2 byte  RW   int16  0.1 ℃
+
+  # 105  Balance start cell voltage            2 byte  RW  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} balance start cell voltage"
+    use_write_multiple: true
+    address: 105
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 255.0
+    step: 1
+    unit_of_measurement: "mV"
+
+  # 106  Balance start delta voltage           2 byte  RW  uint16  mV
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} balance start delta voltage"
+    use_write_multiple: true
+    address: 106
+    register_type: holding
+    value_type: U_WORD
+    min_value: 0.0
+    max_value: 255.0
+    step: 1
+    unit_of_measurement: "mV"
+
+  # 107  Pack full-charge voltage              2 byte  RW  uint16  mV
+  # 108  Pack full-charge current              2 byte  RW  uint16  mA
+  # 109  Cell sleep voltage                    2 byte  RW  uint16  mV
+  # 110  Cell sleep delay time                 2 byte  RW  uint16  min
+  # 111  Short circuit protect delay time      2 byte  RW   uint8  25uS Max 500uS
+  # 112  SOC alarm threshold                   2 byte  RW   uint8  % 0~100%
+  # 113  Charging OC-2 protection              2 byte  RW  uint16  A
+  # 114  Charging OC-2 protection delay time   2 byte  RW   uint8  0.025S 1~255
+
+text_sensor:
+  #   9  Warning flag                          2 byte   R  uint16  Hex See ^1
+  #  10  Protection flag                       2 byte   R  uint16  Hex See ^2
+  #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
+
+  # 150  Version information                  20 byte   R  uint16  ASCII
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} version information"
+    skip_updates: 60
+    address: 150
+    register_type: holding
+    register_count: 10
+    response_size: 20
+
+  # 160  Model SN                             20 byte  RW  uint16  ASCII BMS Manufacturer
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} bms serial number"
+    skip_updates: 60
+    address: 160
+    register_type: holding
+    register_count: 10
+    response_size: 20
+
+  # 170  PACK SN                              20 byte  RW  uint16  ASCII PACK Manufacturer
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} battery pack serial number"
+    skip_updates: 60
+    address: 170
+    register_type: holding
+    register_count: 10
+    response_size: 20
