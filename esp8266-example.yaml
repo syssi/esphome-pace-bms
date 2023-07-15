@@ -459,7 +459,7 @@ sensor:
       uint8_t min_voltage_cell = 0;
       uint8_t max_voltage_cell = 0;
       for (uint8_t i = 0; i < cells; i++) {
-        float cell_voltage = (uint16_t)(data[i * 2] << 8 | data[(i * 2) + 1] << 0) * 0.001f;
+        float cell_voltage = (uint16_t)(data[item->offset + (i * 2)] << 8 | data[item->offset + (i * 2) + 1] << 0) * 0.001f;
         ESP_LOGD("", "Cell voltage %d: %.3f V", i + 1, cell_voltage);
         average_cell_voltage = average_cell_voltage + cell_voltage;
         if (cell_voltage < min_cell_voltage) {
