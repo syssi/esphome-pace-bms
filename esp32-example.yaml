@@ -436,6 +436,95 @@ sensor:
     filters:
       - multiply: 0.001
 
+  # Delta cell voltage
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} delta cell voltage"
+    address: 15
+    register_type: holding
+    value_type: U_WORD
+    register_count: 16
+    response_size: 32
+    unit_of_measurement: "V"
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 2
+    lambda: |-
+      uint8_t cells = 16;
+      if (data.size() < cells * 2) {
+        return NAN;
+      }
+
+      float min_cell_voltage = 100.0f;
+      float max_cell_voltage = -100.0f;
+      float average_cell_voltage = 0.0f;
+      uint8_t min_voltage_cell = 0;
+      uint8_t max_voltage_cell = 0;
+      for (uint8_t i = 0; i < cells; i++) {
+        float cell_voltage = (uint16_t)(data[i * 2] << 8 | data[(i * 2) + 1] << 0) * 0.001f;
+        average_cell_voltage = average_cell_voltage + cell_voltage;
+        if (cell_voltage < min_cell_voltage) {
+            min_cell_voltage = cell_voltage;
+            min_voltage_cell = i + 1;
+        }
+        if (cell_voltage > max_cell_voltage) {
+          max_cell_voltage = cell_voltage;
+          max_voltage_cell = i + 1;
+        }
+      }
+      average_cell_voltage = average_cell_voltage / cells;
+
+      id(bms0_average_cell_voltage).publish_state(average_cell_voltage);
+      id(bms0_min_cell_voltage).publish_state(min_cell_voltage);
+      id(bms0_max_cell_voltage).publish_state(max_cell_voltage);
+      id(bms0_min_voltage_cell).publish_state(min_voltage_cell);
+      id(bms0_max_voltage_cell).publish_state(max_voltage_cell);
+
+      return max_cell_voltage - min_cell_voltage;
+
+  - platform: template
+    id: bms0_average_cell_voltage
+    name: "${name} average cell voltage"
+    update_interval: never
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 3
+
+  - platform: template
+    id: bms0_min_cell_voltage
+    name: "${name} min cell voltage"
+    update_interval: never
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 3
+
+  - platform: template
+    id: bms0_max_cell_voltage
+    name: "${name} max cell voltage"
+    update_interval: never
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 3
+
+  - platform: template
+    id: bms0_min_voltage_cell
+    name: "${name} min voltage cell"
+    update_interval: never
+    unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
+
+  - platform: template
+    id: bms0_max_voltage_cell
+    name: "${name} max voltage cell"
+    update_interval: never
+    unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
+
   #  31  Battery temperature 1                 2 byte   R   int16  0.1 ℃
   - platform: modbus_controller
     modbus_controller_id: bms0
