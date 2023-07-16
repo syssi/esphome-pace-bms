@@ -133,100 +133,100 @@ See [docs/PACE-BMS-Modbus-Protocol-for-RS485-V1.3-20170627.pdf](docs/PACE-BMS-Mo
 
 The protocol is Modbus RTU via RS485.
 
-| Addr | Description                          | Len | R/W |   Type | Unit   |                                   |
-|-----:|:-------------------------------------|----:|:----|-------:|:-------|:----------------------------------|
-|    0 | Current                              |   2 | R   |  int16 | 10mA   |                                   |
-|    1 | Voltage of pack                      |   2 | R   | uint16 | 10mV   |                                   |
-|    2 | State of charge                      |   2 | R   |  uint8 | %      | 0~100%                            |
-|    3 | SOH                                  |   2 | R   |  uint8 | %      | 0~100%                            |
-|    4 | Remain capacity                      |   2 | R   | uint16 | 10mAH  |                                   |
-|    5 | Full capacity                        |   2 | R   | uint16 | 10mAH  |                                   |
-|    6 | Design capacity                      |   2 | R   | uint16 | 10mAH  |                                   |
-|    7 | Charging cycles count                |   2 | R   | uint16 |        |                                   |
-|    9 | Warning flag                         |   2 | R   | uint16 | Hex    | See ^1                            |
-|   10 | Protection flag                      |   2 | R   | uint16 | Hex    | See ^2                            |
-|   11 | Status/Fault flag                    |   2 | R   | uint16 | Hex    | See ^3                            |
-|   12 | Balance status                       |   2 | R   | uint16 | Hex    |                                   |
-|   15 | Cell voltage 1                       |   2 | R   | uint16 | mV     |                                   |
-|   16 | Cell voltage 2                       |   2 | R   | uint16 | mV     |                                   |
-|   17 | Cell voltage 3                       |   2 | R   | uint16 | mV     |                                   |
-|   18 | Cell voltage 4                       |   2 | R   | uint16 | mV     |                                   |
-|   19 | Cell voltage 5                       |   2 | R   | uint16 | mV     |                                   |
-|   20 | Cell voltage 6                       |   2 | R   | uint16 | mV     |                                   |
-|   21 | Cell voltage 7                       |   2 | R   | uint16 | mV     |                                   |
-|   22 | Cell voltage 8                       |   2 | R   | uint16 | mV     |                                   |
-|   23 | Cell voltage 9                       |   2 | R   | uint16 | mV     |                                   |
-|   24 | Cell voltage 10                      |   2 | R   | uint16 | mV     |                                   |
-|   25 | Cell voltage 11                      |   2 | R   | uint16 | mV     |                                   |
-|   26 | Cell voltage 12                      |   2 | R   | uint16 | mV     |                                   |
-|   27 | Cell voltage 13                      |   2 | R   | uint16 | mV     |                                   |
-|   28 | Cell voltage 14                      |   2 | R   | uint16 | mV     |                                   |
-|   29 | Cell voltage 15                      |   2 | R   | uint16 | mV     |                                   |
-|   30 | Cell voltage 16                      |   2 | R   | uint16 | mV     |                                   |
-|   31 | Battery temperature 1                |   2 | R   |  int16 | 0.1 ℃  |                                   |
-|   32 | Battery temperature 2                |   2 | R   |  int16 | 0.1 ℃  |                                   |
-|   33 | Battery temperature 3                |   2 | R   |  int16 | 0.1 ℃  |                                   |
-|   34 | Battery temperature 4                |   2 | R   |  int16 | 0.1 ℃  |                                   |
-|   35 | MOSFET temperature                   |   2 | R   |  int16 | 0.1 ℃  | or invalid                        |
-|   36 | Environment temperature              |   2 | R   |  int16 | 0.1 ℃  | or invalid                        |
-|   60 | Pack OV alarm                        |   2 | RW  | uint16 | mV     |                                   |
-|   61 | Pack OV protection                   |   2 | RW  | uint16 | mV     |                                   |
-|   62 | Pack OV release protection           |   2 | RW  | uint16 | mV     |                                   |
-|   63 | Pack OV protection delay time        |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
-|   64 | Cell OV alarm                        |   2 | RW  | uint16 | mV     |                                   |
-|   65 | Cell OV protection                   |   2 | RW  | uint16 | mV     |                                   |
-|   66 | Cell OV release protection           |   2 | RW  | uint16 | mV     |                                   |
-|   67 | Cell OV protection delay time        |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
-|   68 | Pack UV alarm                        |   2 | RW  | uint16 | mV     |                                   |
-|   69 | Pack UV protection                   |   2 | RW  | uint16 | mV     |                                   |
-|   70 | Pack UV release protection           |   2 | RW  | uint16 | mV     |                                   |
-|   71 | Pack UV protection delay time        |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
-|   72 | Cell UV alarm                        |   2 | RW  | uint16 | mV     |                                   |
-|   73 | Cell UV protection                   |   2 | RW  | uint16 | mV     |                                   |
-|   74 | Cell UV release protection           |   2 | RW  | uint16 | mV     |                                   |
-|   75 | Cell UV protection delay time        |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
-|   76 | Charging OC alarm                    |   2 | RW  | uint16 | A      |                                   |
-|   77 | Charging OC protection               |   2 | RW  | uint16 | A      |                                   |
-|   78 | Charging OC protection delay time    |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
-|   79 | Discharging OC alarm                 |   2 | RW  | uint16 | A      |                                   |
-|   80 | Discharging OC protection            |   2 | RW  | uint16 | A      |                                   |
-|   81 | Discharging OC protection delay time |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
-|   82 | Discharging OC protection            |   2 | RW  | uint16 |        |                                   |
-|   83 | Discharging OC protection delay time |   2 | RW  |  uint8 | 0.025S | 1~255                             |
-|   84 | Charging OT alarm                    |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   85 | Charging OT protection               |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   86 | Charging OT release protection       |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   87 | Discharging OT alarm                 |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   88 | Discharging OT protection            |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   89 | Discharging OT release               |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   90 | Charging UT alarm                    |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   91 | Charging UT protection               |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   92 | Charging UT release protection       |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   93 | Discharging UT alarm                 |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   94 | Discharging UT protection            |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   95 | Discharging UT release protection    |   2 | RW  |  int16 | 0.1 ℃  |                                   |
-|   96 | MOSFET OT alarm                      |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
-|   97 | MOSFET OT protection                 |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
-|   98 | MOSFET OT release protection         |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
-|   99 | Environment OT alarm                 |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
-|  100 | Environment OT protection            |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
-|  101 | Environment OT release protection    |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
-|  102 | Environment UT alarm                 |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
-|  103 | Environment UT protection            |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
-|  104 | Environment UT release protection    |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
-|  105 | Balance start cell voltage           |   2 | RW  | uint16 | mV     |                                   |
-|  106 | Balance start delta voltage          |   2 | RW  | uint16 | mV     |                                   |
-|  107 | Pack full-charge voltage             |   2 | RW  | uint16 | mV     |                                   |
-|  108 | Pack full-charge current             |   2 | RW  | uint16 | mA     |                                   |
-|  109 | Cell sleep voltage                   |   2 | RW  | uint16 | mV     |                                   |
-|  110 | Cell sleep delay time                |   2 | RW  | uint16 | min    |                                   |
-|  111 | Short circuit protect delay time     |   2 | RW  |  uint8 | 25uS   | Max 500uS                         |
-|  112 | SOC alarm threshold                  |   2 | RW  |  uint8 | %      | 0~100%                            |
-|  113 | Charging OC-2 protection             |   2 | RW  | uint16 | A      |                                   |
-|  114 | Charging OC-2 protection delay time  |   2 | RW  |  uint8 | 0.025S | 1~255                             |
-|  150 | Version information                  |  20 | R   | uint16 | ASCII  |                                   |
-|  160 | Model SN                             |  20 | RW  | uint16 | ASCII  | BMS Manufacturer                  |
-|  170 | PACK SN                              |  20 | RW  | uint16 | ASCII  | PACK Manufacturer                 |
+| Addr | Description                            | Len | R/W |   Type | Unit   |                                   |
+|-----:|:---------------------------------------|----:|:----|-------:|:-------|:----------------------------------|
+|    0 | Current                                |   2 | R   |  int16 | 10mA   |                                   |
+|    1 | Voltage of pack                        |   2 | R   | uint16 | 10mV   |                                   |
+|    2 | State of charge                        |   2 | R   |  uint8 | %      | 0~100%                            |
+|    3 | SOH                                    |   2 | R   |  uint8 | %      | 0~100%                            |
+|    4 | Remain capacity                        |   2 | R   | uint16 | 10mAH  |                                   |
+|    5 | Full capacity                          |   2 | R   | uint16 | 10mAH  |                                   |
+|    6 | Design capacity                        |   2 | R   | uint16 | 10mAH  |                                   |
+|    7 | Charging cycles count                  |   2 | R   | uint16 |        |                                   |
+|    9 | Warning flag                           |   2 | R   | uint16 | Hex    | See ^1                            |
+|   10 | Protection flag                        |   2 | R   | uint16 | Hex    | See ^2                            |
+|   11 | Status/Fault flag                      |   2 | R   | uint16 | Hex    | See ^3                            |
+|   12 | Balance status                         |   2 | R   | uint16 | Hex    |                                   |
+|   15 | Cell voltage 1                         |   2 | R   | uint16 | mV     |                                   |
+|   16 | Cell voltage 2                         |   2 | R   | uint16 | mV     |                                   |
+|   17 | Cell voltage 3                         |   2 | R   | uint16 | mV     |                                   |
+|   18 | Cell voltage 4                         |   2 | R   | uint16 | mV     |                                   |
+|   19 | Cell voltage 5                         |   2 | R   | uint16 | mV     |                                   |
+|   20 | Cell voltage 6                         |   2 | R   | uint16 | mV     |                                   |
+|   21 | Cell voltage 7                         |   2 | R   | uint16 | mV     |                                   |
+|   22 | Cell voltage 8                         |   2 | R   | uint16 | mV     |                                   |
+|   23 | Cell voltage 9                         |   2 | R   | uint16 | mV     |                                   |
+|   24 | Cell voltage 10                        |   2 | R   | uint16 | mV     |                                   |
+|   25 | Cell voltage 11                        |   2 | R   | uint16 | mV     |                                   |
+|   26 | Cell voltage 12                        |   2 | R   | uint16 | mV     |                                   |
+|   27 | Cell voltage 13                        |   2 | R   | uint16 | mV     |                                   |
+|   28 | Cell voltage 14                        |   2 | R   | uint16 | mV     |                                   |
+|   29 | Cell voltage 15                        |   2 | R   | uint16 | mV     |                                   |
+|   30 | Cell voltage 16                        |   2 | R   | uint16 | mV     |                                   |
+|   31 | Battery temperature 1                  |   2 | R   |  int16 | 0.1 ℃  |                                   |
+|   32 | Battery temperature 2                  |   2 | R   |  int16 | 0.1 ℃  |                                   |
+|   33 | Battery temperature 3                  |   2 | R   |  int16 | 0.1 ℃  |                                   |
+|   34 | Battery temperature 4                  |   2 | R   |  int16 | 0.1 ℃  |                                   |
+|   35 | MOSFET temperature                     |   2 | R   |  int16 | 0.1 ℃  | or invalid                        |
+|   36 | Environment temperature                |   2 | R   |  int16 | 0.1 ℃  | or invalid                        |
+|   60 | Pack OV alarm                          |   2 | RW  | uint16 | mV     |                                   |
+|   61 | Pack OV protection                     |   2 | RW  | uint16 | mV     |                                   |
+|   62 | Pack OV release protection             |   2 | RW  | uint16 | mV     |                                   |
+|   63 | Pack OV protection delay time          |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
+|   64 | Cell OV alarm                          |   2 | RW  | uint16 | mV     |                                   |
+|   65 | Cell OV protection                     |   2 | RW  | uint16 | mV     |                                   |
+|   66 | Cell OV release protection             |   2 | RW  | uint16 | mV     |                                   |
+|   67 | Cell OV protection delay time          |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
+|   68 | Pack UV alarm                          |   2 | RW  | uint16 | mV     |                                   |
+|   69 | Pack UV protection                     |   2 | RW  | uint16 | mV     |                                   |
+|   70 | Pack UV release protection             |   2 | RW  | uint16 | mV     |                                   |
+|   71 | Pack UV protection delay time          |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
+|   72 | Cell UV alarm                          |   2 | RW  | uint16 | mV     |                                   |
+|   73 | Cell UV protection                     |   2 | RW  | uint16 | mV     |                                   |
+|   74 | Cell UV release protection             |   2 | RW  | uint16 | mV     |                                   |
+|   75 | Cell UV protection delay time          |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
+|   76 | Charging OC alarm                      |   2 | RW  | uint16 | A      |                                   |
+|   77 | Charging OC protection                 |   2 | RW  | uint16 | A      |                                   |
+|   78 | Charging OC protection delay time      |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
+|   79 | Discharging OC alarm                   |   2 | RW  | uint16 | A      |                                   |
+|   80 | Discharging OC protection              |   2 | RW  | uint16 | A      |                                   |
+|   81 | Discharging OC protection delay time   |   2 | RW  |  uint8 | 0.1S   | 1~255                             |
+|   82 | Discharging OC-2 protection            |   2 | RW  | uint16 | A      |                                   |
+|   83 | Discharging OC-2 protection delay time |   2 | RW  |  uint8 | 0.025S | 1~255                             |
+|   84 | Charging OT alarm                      |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   85 | Charging OT protection                 |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   86 | Charging OT release protection         |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   87 | Discharging OT alarm                   |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   88 | Discharging OT protection              |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   89 | Discharging OT release                 |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   90 | Charging UT alarm                      |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   91 | Charging UT protection                 |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   92 | Charging UT release protection         |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   93 | Discharging UT alarm                   |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   94 | Discharging UT protection              |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   95 | Discharging UT release protection      |   2 | RW  |  int16 | 0.1 ℃  |                                   |
+|   96 | MOSFET OT alarm                        |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
+|   97 | MOSFET OT protection                   |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
+|   98 | MOSFET OT release protection           |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
+|   99 | Environment OT alarm                   |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
+|  100 | Environment OT protection              |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
+|  101 | Environment OT release protection      |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
+|  102 | Environment UT alarm                   |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
+|  103 | Environment UT protection              |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
+|  104 | Environment UT release protection      |   2 | RW  |  int16 | 0.1 ℃  | or invalid parameters in BMS-4820 |
+|  105 | Balance start cell voltage             |   2 | RW  | uint16 | mV     |                                   |
+|  106 | Balance start delta voltage            |   2 | RW  | uint16 | mV     |                                   |
+|  107 | Pack full-charge voltage               |   2 | RW  | uint16 | mV     |                                   |
+|  108 | Pack full-charge current               |   2 | RW  | uint16 | mA     |                                   |
+|  109 | Cell sleep voltage                     |   2 | RW  | uint16 | mV     |                                   |
+|  110 | Cell sleep delay time                  |   2 | RW  | uint16 | min    |                                   |
+|  111 | Short circuit protect delay time       |   2 | RW  |  uint8 | 25uS   | Max 500uS                         |
+|  112 | SOC alarm threshold                    |   2 | RW  |  uint8 | %      | 0~100%                            |
+|  113 | Charging OC-2 protection               |   2 | RW  | uint16 | A      |                                   |
+|  114 | Charging OC-2 protection delay time    |   2 | RW  |  uint8 | 0.025S | 1~255                             |
+|  150 | Version information                    |  20 | R   | uint16 | ASCII  |                                   |
+|  160 | Model SN                               |  20 | RW  | uint16 | ASCII  | BMS Manufacturer                  |
+|  170 | PACK SN                                |  20 | RW  | uint16 | ASCII  | PACK Manufacturer                 |
 
 ## Known issues
 
