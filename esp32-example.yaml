@@ -529,7 +529,7 @@ sensor:
   #  31  Battery temperature 1                 2 byte   R   int16  0.1 ℃
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} Cell temperature 1"
+    name: "${name} battery temperature 1"
     address: 31
     register_type: holding
     value_type: S_WORD
@@ -543,7 +543,7 @@ sensor:
   #  32  Battery temperature 2                 2 byte   R   int16  0.1 ℃
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} battery temperature 1"
+    name: "${name} battery temperature 2"
     address: 32
     register_type: holding
     value_type: S_WORD
@@ -557,7 +557,7 @@ sensor:
   #  33  Battery temperature 3                 2 byte   R   int16  0.1 ℃
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} battery temperature 2"
+    name: "${name} battery temperature 3"
     address: 33
     register_type: holding
     value_type: S_WORD
@@ -571,7 +571,7 @@ sensor:
   #  34  Battery temperature 4                 2 byte   R   int16  0.1 ℃
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} battery temperature 3"
+    name: "${name} battery temperature 4"
     address: 34
     register_type: holding
     value_type: S_WORD
