@@ -448,7 +448,7 @@ sensor:
     unit_of_measurement: "V"
     device_class: voltage
     state_class: measurement
-    accuracy_decimals: 2
+    accuracy_decimals: 3
     lambda: |-
       uint8_t cells = 16;
       if (data.size() < cells * 2) {
