@@ -8,9 +8,19 @@
 
 ESPHome configuration to monitor and control a PACE Battery Management System (PACE-BMS) via RS485 (Modbus)
 
+This project implements the `PACE_MODBUS` protocol. Please use the RS485 port next to the CAN bus port and enable the protocol using the `PbmsTools.exe` (System Config -> Inverter protocol -> RS485 Protocol).
+
 ## Supported devices
 
-* TBD.
+* Katbatt 6.4kWh LiFePO4 Stackable Battery, PACE BMS P16S200A (`P16S200A-21473-1.03A310771030800025A`)
+
+## Untested devices
+
+* Gobel Power GP-SR1-RN150 51.2V 280Ah, PACE BMS P16S200A
+* Jakiper/SOK/BSLBATT/ 100Ah, PACE BMS P16S100A
+* LIONTRON LiFePO4 LX48-100, 48V 100Ah
+* Shenzen Delong 24V 100Ah, PACE BMS P16S200A-PC1547
+* PACE BMS P16S100A-PC1447
 
 ## Schematics
 
@@ -240,4 +250,5 @@ uart:
 
 ## References
 
-TBD.
+* https://www.akkudoktor.net/forum/bms-batterie-management-monitoring-system/pace-bms-informationssammlung/
+* https://docs.google.com/document/d/1JqBizjyOrAge02pO-S6asDoAJgEdHV0Ujbs3BCCvXLo/edit
