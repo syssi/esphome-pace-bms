@@ -664,7 +664,7 @@ number:
     register_type: holding
     value_type: U_WORD
     min_value: 0.0
-    max_value: 255.0
+    max_value: 65535.0
     step: 1
     unit_of_measurement: "mV"
 
@@ -677,7 +677,7 @@ number:
     register_type: holding
     value_type: U_WORD
     min_value: 0.0
-    max_value: 255.0
+    max_value: 65535.0
     step: 1
     unit_of_measurement: "mV"
 
