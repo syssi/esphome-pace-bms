@@ -56,9 +56,9 @@ modbus_controller:
     update_interval: 10s
 
 binary_sensor:
-#  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
-#      -> Bit 8: Status: Charging enabled/disabled
-#      -> Bit 9: Status: Discharging enabled/disabled
+  #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
+  #      -> Bit 8: Status: Charging enabled/disabled
+  #      -> Bit 9: Status: Discharging enabled/disabled
 
 sensor:
   #   0  Current                               2 byte   R   int16  10mA (Positive: chargingm Negative: discharging)
@@ -182,6 +182,8 @@ sensor:
     state_class: measurement
     accuracy_decimals: 0
 
+  #   8  Reserved
+
   #   9  Warning flag                          2 byte   R  uint16  Hex See ^1
   - platform: modbus_controller
     modbus_controller_id: bms0
@@ -225,6 +227,9 @@ sensor:
     unit_of_measurement: ""
     state_class: measurement
     accuracy_decimals: 0
+
+  #  13  Reserved
+  #  14  Reserved
 
   #  15  Cell voltage 1                        2 byte   R  uint16  mV
   - platform: modbus_controller
@@ -434,6 +439,8 @@ sensor:
     filters:
       - multiply: 0.001
 
+  ### Calculated sensors
+
   # Delta cell voltage
   - platform: modbus_controller
     modbus_controller_id: bms0
@@ -523,6 +530,8 @@ sensor:
     state_class: measurement
     accuracy_decimals: 0
 
+  ####
+
   #  31  Battery temperature 1                 2 byte   R   int16  0.1 ℃
   - platform: modbus_controller
     modbus_controller_id: bms0
@@ -607,6 +616,8 @@ sensor:
     filters:
       - multiply: 0.1
 
+  #  37-59  Reserved
+
 number:
   #  60  Pack OV alarm                         2 byte  RW  uint16  mV
   - platform: modbus_controller
@@ -651,6 +662,7 @@ number:
     unit_of_measurement: "mV"
 
   #  63  Pack OV protection delay time         2 byte  RW  uint8   0.1S 1~255
+  #  @TODO
 
   #  64  Cell OV alarm                         2 byte  RW  uint16  mV
   - platform: modbus_controller
@@ -695,6 +707,7 @@ number:
     unit_of_measurement: "mV"
 
   #  67  Cell OV protection delay time         2 byte  RW   uint8  0.1S 1~255
+  #  @TODO
 
   #  68  Pack UV alarm                         2 byte  RW  uint16  mV
   - platform: modbus_controller
@@ -739,6 +752,7 @@ number:
     unit_of_measurement: "mV"
 
   #  71  Pack UV protection delay time         2 byte  RW   uint8  0.1S 1~255
+  #  @TODO
 
   #  72  Cell UV alarm                         2 byte  RW  uint16  mV
   - platform: modbus_controller
@@ -783,6 +797,7 @@ number:
     unit_of_measurement: "mV"
 
   #  75  Cell UV protection delay time         2 byte  RW   uint8  0.1S 1~255
+  #  @TODO
 
   #  76  Charging OC alarm                     2 byte  RW  uint16  A
   - platform: modbus_controller
@@ -813,6 +828,7 @@ number:
     unit_of_measurement: "A"
 
   #  78  Charging OC protection delay time     2 byte  RW   uint8  0.1S 1~255
+  #  @TODO
 
   #  79  Discharging OC alarm                  2 byte  RW  uint16  A
   - platform: modbus_controller
@@ -843,6 +859,7 @@ number:
     unit_of_measurement: "A"
 
   #  81  Discharging OC protection delay time  2 byte  RW   uint8  0.1S 1~255
+  #  @TODO
 
   #  82  Discharging OC-2 protection             2 byte  RW  uint16  A
   - platform: modbus_controller
@@ -859,6 +876,8 @@ number:
     unit_of_measurement: "A"
 
   #  83  Discharging OC-2 protection delay time  2 byte  RW   uint8  0.025S 1~255
+  #  @TODO
+
   #  84  Charging OT alarm                     2 byte  RW   int16  0.1 ℃
   #  85  Charging OT protection                2 byte  RW   int16  0.1 ℃
   #  86  Charging OT release protection        2 byte  RW   int16  0.1 ℃
@@ -996,11 +1015,13 @@ number:
     unit_of_measurement: "A"
 
   # 114  Charging OC-2 protection delay time   2 byte  RW   uint8  0.025S 1~255
+  # @TODO
 
 text_sensor:
   #   9  Warning flag                          2 byte   R  uint16  Hex See ^1
   #  10  Protection flag                       2 byte   R  uint16  Hex See ^2
   #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
+  #  @TODO
 
   # 150  Version information                  20 byte   R  uint16  ASCII
   - platform: modbus_controller
