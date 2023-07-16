@@ -21,6 +21,10 @@ This project implements the `PACE_MODBUS` protocol. Please use the RS485 port ne
 * LIONTRON LiFePO4 LX48-100, 48V 100Ah
 * Shenzen Delong 24V 100Ah, PACE BMS P16S200A-PC1547
 * PACE BMS P16S100A-PC1447
+* Hubble Lithium (AM2, AM4)
+* Revov R100
+* Revov R9
+* Greenrich U-P5000
 
 ## Schematics
 
@@ -252,3 +256,6 @@ uart:
 
 * https://www.akkudoktor.net/forum/bms-batterie-management-monitoring-system/pace-bms-informationssammlung/
 * https://docs.google.com/document/d/1JqBizjyOrAge02pO-S6asDoAJgEdHV0Ujbs3BCCvXLo/edit
+* https://powerforum.co.za/topic/13982-bms-pace-addon-for-home-assistant-as-used-by-hubbles-am-2-and-am-4/ (different protocol!)
+* https://github.com/fancyui/Gobel-Power-RN-BMS-RS485-ModBus (different protocol!)
+* https://github.com/Tertiush/bmspace (different protocol!)
