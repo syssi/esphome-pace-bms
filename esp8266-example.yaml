@@ -161,7 +161,7 @@ sensor:
   #   5  Full capacity                         2 byte   R  uint16  10mAH
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} Full capacity"
+    name: "${name} full capacity"
     address: 5
     register_type: holding
     value_type: U_WORD
@@ -174,7 +174,7 @@ sensor:
   #   6  Design capacity                       2 byte   R  uint16  10mAH
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} Design capacity"
+    name: "${name} design capacity"
     address: 6
     register_type: holding
     value_type: U_WORD
@@ -1403,7 +1403,20 @@ number:
     unit_of_measurement: "min"
 
   # 111  Short circuit protect delay time      2 byte  RW   uint8  25uS Max 500uS
-  # @TODO
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} short circuit protect delay time"
+    use_write_multiple: true
+    address: 111
+    register_type: holding
+    value_type: U_WORD
+    lambda: "return x * 25.0f; "
+    write_lambda: "return x * 0.04f;"
+    min_value: 25.0
+    max_value: 500.0
+    step: 25.0
+    mode: box
+    unit_of_measurement: "us"
 
   # 112  SOC alarm threshold                   2 byte  RW   uint8  % 0~100%
   - platform: modbus_controller
@@ -1434,7 +1447,20 @@ number:
     unit_of_measurement: "A"
 
   # 114  Charging OC-2 protection delay time   2 byte  RW   uint8  0.025S 1~255
-  # @TODO
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} Charging overcurrent 2 protection delay time"
+    use_write_multiple: true
+    address: 114
+    register_type: holding
+    value_type: U_WORD
+    lambda: "return x * 25.0f; "
+    write_lambda: "return x * 0.04f;"
+    min_value: 25.0
+    max_value: 6375.0
+    step: 25.0
+    mode: box
+    unit_of_measurement: "ms"
 
 text_sensor:
   #   9  Warning flag                          2 byte   R  uint16  Hex See ^1
