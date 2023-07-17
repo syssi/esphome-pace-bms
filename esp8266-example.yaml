@@ -63,7 +63,6 @@ binary_sensor:
     name: "${name} charging"
     address: 11
     register_type: holding
-    value_type: U_WORD
     bitmask: 0x0080
 
   #      Bit 9: Status: Discharging enabled/disabled
@@ -72,7 +71,6 @@ binary_sensor:
     name: "${name} discharging"
     address: 11
     register_type: holding
-    value_type: U_WORD
     bitmask: 0x0100
 
 sensor:
