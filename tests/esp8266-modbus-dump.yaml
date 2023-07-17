@@ -63,9 +63,9 @@ sensor:
       }
 
       for (uint8_t i = 0; i < registers; i++) {
-        uint16_t register = item->offset + i;
+        uint16_t address = item->offset + i;
         uint16_t value = data[item->offset + (i * 2)] << 8 | data[item->offset + (i * 2) + 1] << 0;
-        ESP_LOGI("", "Register 0x%02X (%d): 0x%04 (%d)", register, register, value, value);
+        ESP_LOGI("", "Register 0x%02X (%d): 0x%04X (%d)", address, address, value, value);
       }
 
       return 1.0;
