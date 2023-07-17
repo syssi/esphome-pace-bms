@@ -43,23 +43,29 @@ modbus_controller:
     address: 0x01
     modbus_id: modbus0
     command_throttle: 200ms
-    update_interval: 30s
+    update_interval: 10s
 
-text_sensor:
+sensor:
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} dump address 0-99"
+    name: "${name} read up to 119"
     address: 0
     register_type: holding
-    register_count: 100
-    response_size: 200
-    raw_encode: HEXBYTES
+    value_type: U_WORD
+    register_count: 119
+    response_size: 238
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    lambda: |-
+      uint8_t registers = 119;
+      if (data.size() < registers * 2) {
+        return NAN;
+      }
 
-  - platform: modbus_controller
-    modbus_controller_id: bms0
-    name: "${name} dump address 100-199"
-    address: 100
-    register_type: holding
-    register_count: 100
-    response_size: 200
-    raw_encode: HEXBYTES
+      for (uint8_t i = 0; i < registers; i++) {
+        uint16_t register = item->offset + i;
+        uint16_t value = data[item->offset + (i * 2)] << 8 | data[item->offset + (i * 2) + 1] << 0;
+        ESP_LOGI("", "Register 0x%02X (%d): 0x%04 (%d)", register, register, value, value);
+      }
+
+      return 1.0;
