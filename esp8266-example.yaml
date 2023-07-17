@@ -211,7 +211,7 @@ sensor:
   #  10  Protection flag                       2 byte   R  uint16  Hex See ^2
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} protection bitmask"
+    name: "${name} protections bitmask"
     address: 10
     register_type: holding
     value_type: U_WORD
@@ -1438,9 +1438,131 @@ number:
 
 text_sensor:
   #   9  Warning flag                          2 byte   R  uint16  Hex See ^1
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} warnings"
+    address: 9
+    register_type: holding
+    register_count: 1
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      static const uint8_t WARNINGS_SIZE = 16;
+      static const char *const WARNINGS[WARNINGS_SIZE] = {
+          "Cell overvoltage",              // 0000 0000 0000 0001 (1)
+          "Cell undervoltage",             // 0000 0000 0000 0010 (2)
+          "Pack overvoltage",              // 0000 0000 0000 0100 (3)
+          "Pack undervoltage",             // 0000 0000 0000 1000 (4)
+          "Charging overcurrent",          // 0000 0000 0001 0000 (5)
+          "Discharging overcurrent",       // 0000 0000 0010 0000 (6)
+          "Reserve (Bit 7)",               // 0000 0000 0100 0000 (7)
+          "Reserve (Bit 8)",               // 0000 0000 1000 0000 (8)
+          "Charging overtemperature",      // 0000 0001 0000 0000 (9)
+          "Discharging overtemperature",   // 0000 0010 0000 0000 (10)
+          "Charging undertemperature",     // 0000 0100 0000 0000 (11)
+          "Discharging undertemperature",  // 0000 1000 0000 0000 (12)
+          "Environment overtemperature",   // 0001 0000 0000 0000 (13)
+          "Environment undertemperature",  // 0010 0000 0000 0000 (14)
+          "MOSFET overtemperature",        // 0100 0000 0000 0000 (15)
+          "Low state of charge",           // 1000 0000 0000 0000 (16)
+      };
+      std::string values = "";
+
+      uint16_t mask = modbus_controller::word_from_hex_str(x, 0);
+      if (mask) {
+        for (int i = 0; i < WARNINGS_SIZE; i++) {
+          if (mask & (1 << i)) {
+            values.append(WARNINGS[i]);
+            values.append(";");
+          }
+        }
+        if (!values.empty()) {
+          values.pop_back();
+        }
+      }
+      return values;
+
   #  10  Protection flag                       2 byte   R  uint16  Hex See ^2
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} protections"
+    address: 10
+    register_type: holding
+    register_count: 1
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      static const uint8_t PROTECTIONS_SIZE = 16;
+      static const char *const PROTECTIONS[PROTECTIONS_SIZE] = {
+          "Cell overvoltage",              // 0000 0000 0000 0001 (1)
+          "Cell undervoltage",             // 0000 0000 0000 0010 (2)
+          "Pack overvoltage",              // 0000 0000 0000 0100 (3)
+          "Pack undervoltage",             // 0000 0000 0000 1000 (4)
+          "Charging overcurrent",          // 0000 0000 0001 0000 (5)
+          "Discharging overcurrent",       // 0000 0000 0010 0000 (6)
+          "Short circuit",                 // 0000 0000 0100 0000 (7)
+          "Charging overvoltage",          // 0000 0000 1000 0000 (8)
+          "Charging overtemperature",      // 0000 0001 0000 0000 (9)
+          "Discharging overtemperature",   // 0000 0010 0000 0000 (10)
+          "Charging undertemperature",     // 0000 0100 0000 0000 (11)
+          "Discharging undertemperature",  // 0000 1000 0000 0000 (12)
+          "MOSFET overtemperature",        // 0001 0000 0000 0000 (13)
+          "Environment overtemperature",   // 0010 0000 0000 0000 (14)
+          "Environment undertemperature",  // 0100 0000 0000 0000 (15)
+          "Reserve (Bit 16)",              // 1000 0000 0000 0000 (16)
+      };
+      std::string values = "";
+
+      uint16_t mask = modbus_controller::word_from_hex_str(x, 0);
+      if (mask) {
+        for (int i = 0; i < PROTECTIONS_SIZE; i++) {
+          if (mask & (1 << i)) {
+            values.append(PROTECTIONS[i]);
+            values.append(";");
+          }
+        }
+        if (!values.empty()) {
+          values.pop_back();
+        }
+      }
+      return values;
+
   #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
-  #  @TODO
+  - platform: modbus_controller
+    modbus_controller_id: smg0
+    name: "${name} errors"
+    address: 11
+    register_type: holding
+    register_count: 1
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      static const uint8_t FAULTS_SIZE = 8;
+      static const char *const FAULTS[FAULTS_SIZE] = {
+          "Charging MOSFET fault",                   // 0000 0000 0000 0001 (1)
+          "Discharging MOSFET fault",                // 0000 0000 0000 0010 (2)
+          "Temperature sensor",                      // 0000 0000 0000 0100 (3)
+          "Reserve (Bit 4)",                         // 0000 0000 0000 1000 (4)
+          "Battery cell fault",                      // 0000 0000 0001 0000 (5)
+          "Front end sampling communication fault",  // 0000 0000 0010 0000 (6)
+          "Reserve (Bit 7)",                         // 0000 0000 0100 0000 (7)
+          "Reserve (Bit 8)",                         // 0000 0000 1000 0000 (8)
+      };
+      std::string values = "";
+
+      uint16_t mask = modbus_controller::word_from_hex_str(x, 0);
+      if (mask) {
+        for (int i = 0; i < FAULTS_SIZE; i++) {
+          if (mask & (1 << i)) {
+            values.append(FAULTS[i]);
+            values.append(";");
+          }
+        }
+        if (!values.empty()) {
+          values.pop_back();
+        }
+      }
+      return values;
 
   # 150  Version information                  20 byte   R  uint16  ASCII
   - platform: modbus_controller
