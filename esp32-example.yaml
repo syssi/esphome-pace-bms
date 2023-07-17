@@ -1441,7 +1441,7 @@ number:
 text_sensor:
   #   9  Warning flag                          2 byte   R  uint16  Hex See ^1
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: bms0
     name: "${name} warnings"
     address: 9
     register_type: holding
@@ -1486,7 +1486,7 @@ text_sensor:
 
   #  10  Protection flag                       2 byte   R  uint16  Hex See ^2
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: bms0
     name: "${name} protections"
     address: 10
     register_type: holding
@@ -1531,7 +1531,7 @@ text_sensor:
 
   #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
   - platform: modbus_controller
-    modbus_controller_id: smg0
+    modbus_controller_id: bms0
     name: "${name} errors"
     address: 11
     register_type: holding
