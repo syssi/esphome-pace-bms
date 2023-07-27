@@ -87,13 +87,7 @@ Please be aware of the different RJ45 pinout colors ([T-568A vs. T-568B](images/
 
 ## Installation
 
-You can install this component with [ESPHome external components feature](https://esphome.io/components/external_components.html) like this:
-```yaml
-external_components:
-  - source: github://syssi/esphome-pace-bms@main
-```
-
-or just use the `esp32-example.yaml` as proof of concept:
+Use the `esp32-example.yaml` as proof of concept:
 
 ```bash
 # Install esphome
