@@ -93,7 +93,7 @@ Use the `esp32-example.yaml` as proof of concept:
 # Install esphome
 pip3 install esphome
 
-# Clone this external component
+# Clone this project
 git clone https://github.com/syssi/esphome-pace-bms.git
 cd esphome-pace-bms
 
