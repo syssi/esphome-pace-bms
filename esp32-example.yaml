@@ -210,6 +210,8 @@ sensor:
     register_type: holding
     value_type: U_WORD
     unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
 
   #   8  Reserved
 
@@ -221,7 +223,9 @@ sensor:
     register_type: holding
     value_type: U_WORD
     unit_of_measurement: ""
-    
+    state_class: measurement
+    accuracy_decimals: 0
+
   #  10  Protection flag                       2 byte   R  uint16  Hex See ^2
   - platform: modbus_controller
     modbus_controller_id: bms0
@@ -230,6 +234,8 @@ sensor:
     register_type: holding
     value_type: U_WORD
     unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
 
   #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
   - platform: modbus_controller
@@ -239,6 +245,8 @@ sensor:
     register_type: holding
     value_type: U_WORD
     unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
 
   #  12  Balance status-bits per cell (1-16)   2 byte   R  uint16  Hex
   - platform: modbus_controller
@@ -248,6 +256,8 @@ sensor:
     register_type: holding
     value_type: U_WORD
     unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
 
   #  13  Reserved
   #  14  Reserved
@@ -540,12 +550,16 @@ sensor:
     name: "${name} min voltage cell"
     update_interval: never
     unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
 
   - platform: template
     id: bms0_max_voltage_cell
     name: "${name} max voltage cell"
     update_interval: never
     unit_of_measurement: ""
+    state_class: measurement
+    accuracy_decimals: 0
 
   ####
 
