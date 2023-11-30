@@ -14,6 +14,7 @@ This project implements the `PACE_MODBUS` protocol. Please use the RS485 port ne
 
 * Katbatt 6.4kWh LiFePO4 Stackable Battery, PACE BMS P16S200A (`P16S200A-21473-1.03A310771030800025A`), using RS485 protocol `PACE_MODBUS`
 * Gobel Power GP-SR1-LF280-RN150 51.2V 280Ah, PACE BMS S16A150 (`JLD-BMS-S16A150`), using RS485 protocol `ModbusC1636`
+* Joyvoit Suns Energy Battery JVBW5KW, PACE BMS P16S100A (`P16S100A-21468-1.00`), using RS485 protocol `None, HS-PC-232-BP-V1.1`
 
 ## Untested devices
 
