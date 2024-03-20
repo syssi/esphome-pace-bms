@@ -26,6 +26,7 @@ This project implements the `PACE_MODBUS` protocol. Please use the RS485 port ne
 * Revov R100
 * Revov R9
 * Greenrich U-P5000
+* MeritSun LFP 200 - 48V (Modbus must be enabled by pbmstool.exe)
 
 ## Schematics
 
