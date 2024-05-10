@@ -59,21 +59,37 @@ modbus_controller:
 
 binary_sensor:
   #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
-  #      Bit 8: Status: Charging enabled/disabled
+  #      Bit 8: Status: Charging operation
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} charging operation"
+    address: 11
+    register_type: holding
+    bitmask: 0x0100
+
+  #      Bit 9: Status: Discharging operation
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} discharging operation"
+    address: 11
+    register_type: holding
+    bitmask: 0x0200
+
+  #      Bit 10: Status: Charging enabled/disabled
   - platform: modbus_controller
     modbus_controller_id: bms0
     name: "${name} charging"
     address: 11
     register_type: holding
-    bitmask: 0x0080
+    bitmask: 0x0400
 
-  #      Bit 9: Status: Discharging enabled/disabled
+  #      Bit 11: Status: Discharging enabled/disabled
   - platform: modbus_controller
     modbus_controller_id: bms0
     name: "${name} discharging"
     address: 11
     register_type: holding
-    bitmask: 0x0100
+    bitmask: 0x0800
 
 sensor:
   #   0  Current                               2 byte   R   int16  10mA (Positive: chargingm Negative: discharging)
@@ -224,7 +240,7 @@ sensor:
   #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} errors bitmask"
+    name: "${name} fault status bitmask"
     address: 11
     register_type: holding
     value_type: U_WORD
@@ -232,7 +248,7 @@ sensor:
     state_class: measurement
     accuracy_decimals: 0
 
-  #  12  Balance status                        2 byte   R  uint16  Hex
+  #  12  Balance status-bits per cell (1-16)   2 byte   R  uint16  Hex
   - platform: modbus_controller
     modbus_controller_id: bms0
     name: "${name} balancer status"
@@ -1555,10 +1571,10 @@ text_sensor:
       }
       return values;
 
-  #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
+  #  11  Fault flag                     2 byte   R  uint16  Hex See ^3
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} errors"
+    name: "${name} faults"
     address: 11
     register_type: holding
     register_count: 1
@@ -1583,6 +1599,43 @@ text_sensor:
         for (int i = 0; i < FAULTS_SIZE; i++) {
           if (mask & (1 << i)) {
             values.append(FAULTS[i]);
+            values.append(";");
+          }
+        }
+        if (!values.empty()) {
+          values.pop_back();
+        }
+      }
+      return values;
+
+  #  11  Status flag                     2 byte   R  uint16  Hex See ^3
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} status"
+    address: 11
+    register_type: holding
+    register_count: 1
+    response_size: 2
+    raw_encode: HEXBYTES
+    lambda: |-
+      static const uint8_t STATUS_SIZE = 8;
+      static const char *const STATUS[STATUS_SIZE] = {
+          "CHG",
+          "DCHG",
+          "MOSFET_CHG",
+          "MOSFET_DCHG",
+          "LIMIT_CHG",
+          "Reserve (Bit 13)",
+          "Charger inversed",
+          "HEAT",
+      };
+      std::string values = "";
+
+      uint16_t mask = modbus_controller::word_from_hex_str(x, 0);
+      if (mask) {
+        for (int i = 8; i < (STATUS_SIZE+8); i++) {
+          if (mask & (1 << i)) {
+            values.append(STATUS[i-8]);
             values.append(";");
           }
         }
