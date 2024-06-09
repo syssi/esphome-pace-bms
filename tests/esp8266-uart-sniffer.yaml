@@ -20,7 +20,7 @@ logger:
 
 uart:
   - id: uart_0
-    baud_rate: 19200
+    baud_rate: 9600
     rx_pin: ${rx_pin}
     debug:
       direction: RX
@@ -29,7 +29,7 @@ uart:
         - lambda: UARTDebug::log_hex(esphome::uart::UARTDirection::UART_DIRECTION_RX, bytes, ':');
 
   - id: uart_1
-    baud_rate: 19200
+    baud_rate: 9600
     rx_pin: ${rx_pin2}
     debug:
       direction: RX
