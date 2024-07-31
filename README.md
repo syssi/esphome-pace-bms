@@ -18,6 +18,7 @@ This project implements the `PACE_MODBUS` protocol. Please use the RS485 port ne
 * Joyvoit Suns Energy Battery JVBW5KW, PACE BMS P16S100A (`P16S100A-21468-1.00`), using RS485 protocol `PACE_MODBUS` ([#19](https://github.com/syssi/esphome-pace-bms/issues/19))
 * Orient Power Wall Mounted Battery 48V100AH, PACE BMS P16S100A-21236-2.01
 * SOK 100Ah 48V Server Rack Berry, PCE BMS P16S100A (`P16S100A-1B470-4.07`), using RS485 protocol `PACE_MODBUS` ([#35](https://github.com/syssi/esphome-pace-bms/issues/35))
+* MeritSun / i-finity LFP 200 - 48V (Modbus must be enabled by pbmstool.exe)
 
 ## Untested devices
 
@@ -30,7 +31,6 @@ This project implements the `PACE_MODBUS` protocol. Please use the RS485 port ne
 * Revov R100
 * Revov R9
 * Greenrich U-P5000
-* MeritSun LFP 200 - 48V (Modbus must be enabled by pbmstool.exe)
 
 ## Schematics
 
