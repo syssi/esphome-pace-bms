@@ -8,6 +8,9 @@ on:  # yamllint disable-line rule:truthy
   schedule:
     - cron: 0 12 * * *
 
+env:
+  FORCE_COLOR: 1
+
 jobs:
   yamllint:
     runs-on: ubuntu-latest
@@ -38,17 +41,18 @@ jobs:
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml'
       - name: Validate example configurations
         run: |
-          esphome config esp32-example.yaml
-          esphome config esp8266-example.yaml
+          for YAML in esp*.yaml; do
+            esphome config $YAML >/dev/null
+          done
 
       - name: Write tests/secrets.yaml
         shell: bash
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > tests/secrets.yaml'
       - name: Validate test configurations
         run: |
-          esphome config tests/esp8266-modbus-dump.yaml
-          esphome config tests/esp8266-rs232-test.yaml
-          esphome config tests/esp8266-uart-sniffer.yaml
+          for YAML in tests/esp*.yaml; do
+            esphome config $YAML >/dev/null
+          done
 
   esphome-compile:
     runs-on: ubuntu-latest
@@ -87,5 +91,6 @@ jobs:
         run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > secrets.yaml'
       - name: Compile example configurations
         run: |
-          esphome compile esp32-example.yaml
-          esphome compile esp8266-example.yaml
+          for YAML in esp*.yaml; do
+            esphome compile $YAML
+          done
