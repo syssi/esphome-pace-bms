@@ -92,5 +92,5 @@ jobs:
       - name: Compile example configurations
         run: |
           for YAML in esp*.yaml; do
-            esphome compile $YAML >/dev/null
+            esphome compile $YAML
           done
