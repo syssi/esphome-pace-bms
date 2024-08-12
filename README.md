@@ -19,16 +19,14 @@ This project implements the `PACE_MODBUS` protocol. Please use the RS485 port ne
 * Orient Power Wall Mounted Battery 48V100AH, PACE BMS P16S100A-21236-2.01
 * SOK 100Ah 48V Server Rack Berry, PCE BMS P16S100A (`P16S100A-1B470-4.07`), using RS485 protocol `PACE_MODBUS` ([#35](https://github.com/syssi/esphome-pace-bms/issues/35))
 * MeritSun / i-finity LFP 200 - 48V (Modbus must be enabled by pbmstool.exe)
+* Revov R100 51.2V 100Ah, PACE BMS P16S100A (`P16S100A-12720-4.05G`), using RS485 protocol `SRNE` ([#39](https://github.com/syssi/esphome-pace-bms/issues/39))
 
 ## Untested devices
 
-* Gobel Power GP-SR1-RN150 51.2V 280Ah, PACE BMS P16S200A
-* Jakiper/SOK/BSLBATT 100Ah, PACE BMS P16S100A
+* Jakiper/BSLBATT 100Ah, PACE BMS P16S100A
 * LIONTRON LiFePO4 LX48-100, 48V 100Ah
 * Shenzen Delong 24V 100Ah, PACE BMS P16S200A-PC1547
-* PACE BMS P16S100A-PC1447
 * Hubble Lithium (AM2, AM4)
-* Revov R100
 * Revov R9
 * Greenrich U-P5000
 
