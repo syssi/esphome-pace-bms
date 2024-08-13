@@ -3,6 +3,7 @@ substitutions:
   device_description: "Monitor and control a PACE BMS via RS485 (Modbus)"
   tx_pin: GPIO4
   rx_pin: GPIO5
+  flow_control_pin: GPIO12
 
 esphome:
   name: ${name}
@@ -47,6 +48,7 @@ uart:
 modbus:
   - id: modbus0
     uart_id: uart_0
+    flow_control_pin: ${flow_control_pin}
     send_wait_time: 200ms
 
 modbus_controller:
