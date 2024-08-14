@@ -77,6 +77,135 @@ binary_sensor:
     register_type: holding
     bitmask: 0x0100
 
+#  12  Balance status-bits per cell (1-16)   2 byte   R  uint16  Hex
+  #      Bit 1: Status: Balancing cell 1
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 1"
+    address: 12
+    register_type: holding
+    bitmask: 0x0001
+
+  #      Bit 2: Status: Balancing cell 2
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 2"
+    address: 12
+    register_type: holding
+    bitmask: 0x0002
+
+  #      Bit 3: Status: Balancing cell 3
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 3"
+    address: 12
+    register_type: holding
+    bitmask: 0x0004
+
+  #      Bit 4: Status: Balancing cell 4
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 4"
+    address: 12
+    register_type: holding
+    bitmask: 0x0008
+
+  #      Bit 5: Status: Balancing cell 5
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 5"
+    address: 12
+    register_type: holding
+    bitmask: 0x0010
+
+  #      Bit 6: Status: Balancing cell 6
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 6"
+    address: 12
+    register_type: holding
+    bitmask: 0x0020
+
+  #      Bit 7: Status: Balancing cell 7
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 7"
+    address: 12
+    register_type: holding
+    bitmask: 0x0040
+
+  #      Bit 8: Status: Balancing cell 8
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 8"
+    address: 12
+    register_type: holding
+    bitmask: 0x0080
+
+  #      Bit 9: Status: Balancing cell 9
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 9"
+    address: 12
+    register_type: holding
+    bitmask: 0x0100
+
+  #      Bit 10: Status: Balancing cell 10
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 10"
+    address: 12
+    register_type: holding
+    bitmask: 0x0200
+
+  #      Bit 11: Status: Balancing cell 11
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 11"
+    address: 12
+    register_type: holding
+    bitmask: 0x0400
+
+  #      Bit 12: Status: Balancing cell 12
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 12"
+    address: 12
+    register_type: holding
+    bitmask: 0x0800
+
+  #      Bit 13: Status: Balancing cell 13
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 13"
+    address: 12
+    register_type: holding
+    bitmask: 0x1000
+
+  #      Bit 14: Status: Balancing cell 14
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 14"
+    address: 12
+    register_type: holding
+    bitmask: 0x2000
+
+  #      Bit 15: Status: Balancing cell 15
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 15"
+    address: 12
+    register_type: holding
+    bitmask: 0x4000
+
+  #      Bit 16: Status: Balancing cell 16
+  - platform: modbus_controller
+    modbus_controller_id: bms0
+    name: "${name} cell balancing 16"
+    address: 12
+    register_type: holding
+    bitmask: 0x8000
+
 sensor:
   #   0  Current                               2 byte   R   int16  10mA (Positive: chargingm Negative: discharging)
   - platform: modbus_controller
