@@ -95,7 +95,7 @@ binary_sensor:
     register_type: holding
     bitmask: 0x0800
 
-#  12  Balance status-bits per cell (1-16)   2 byte   R  uint16  Hex
+  #  12  Balance status-bits per cell (1-16)   2 byte   R  uint16  Hex
   #      Bit 1: Status: Balancing cell 1
   - platform: modbus_controller
     modbus_controller_id: bms0
