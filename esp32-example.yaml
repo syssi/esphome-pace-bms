@@ -11,7 +11,7 @@ esphome:
   min_version: 2024.6.0
   project:
     name: "syssi.esphome-pace-bms"
-    version: 1.0.0
+    version: 2.0.0
 
 esp32:
   board: wemos_d1_mini32
@@ -1704,7 +1704,7 @@ text_sensor:
       }
       return values;
 
-  #  11  Fault flag                     2 byte   R  uint16  Hex See ^3
+  #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
   - platform: modbus_controller
     modbus_controller_id: bms0
     name: "${name} faults"
@@ -1741,7 +1741,7 @@ text_sensor:
       }
       return values;
 
-  #  11  Status flag                     2 byte   R  uint16  Hex See ^3
+  #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
   - platform: modbus_controller
     modbus_controller_id: bms0
     name: "${name} status"
