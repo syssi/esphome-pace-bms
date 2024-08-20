@@ -16,10 +16,10 @@ This project implements the `PACE_MODBUS` protocol. Please use the RS485 port ne
 * PACE BMS P16S200A with firmware version 3 (`P16S200A-21382-3.00T213822131800670H`), using RS485 protocol `PACE_MODBUS` ([#20](https://github.com/syssi/esphome-pace-bms/issues/20))
 * Gobel Power GP-SR1-LF280-RN150 51.2V 280Ah, PACE BMS S16A150 (`JLD-BMS-S16A150`), using RS485 protocol `ModbusC1636`
 * Joyvoit Suns Energy Battery JVBW5KW, PACE BMS P16S100A (`P16S100A-21468-1.00`), using RS485 protocol `PACE_MODBUS` ([#19](https://github.com/syssi/esphome-pace-bms/issues/19))
-* Orient Power Wall Mounted Battery 48V100AH, PACE BMS P16S100A-21236-2.01
+* Orient Power Wall Mounted Battery 48V100AH, PACE BMS P16S100A-21236-2.01 ([#31](https://github.com/syssi/esphome-pace-bms/discussions/31))
 * SOK 100Ah 48V Server Rack Berry, PACE BMS P16S100A (`P16S100A-1B470-4.07`), using RS485 protocol `PACE_MODBUS` ([#35](https://github.com/syssi/esphome-pace-bms/issues/35))
 * SOK 100Ah 48V Server Rack Berry, PACE BMS P16S100A (`P16S100A-1B470-4.00`), using RS485 protocol `PACE_MODBUS` ([#38](https://github.com/syssi/esphome-pace-bms/discussions/38))
-* MeritSun / i-finity LFP 200 - 48V (Modbus must be enabled by pbmstool.exe)
+* MeritSun / i-finity LFP 200 - 48V (Modbus must be enabled by pbmstool.exe) ([#29](https://github.com/syssi/esphome-pace-bms/issues/29))
 * Revov R100 51.2V 100Ah, PACE BMS P16S100A (`P16S100A-12720-4.05G`), using RS485 protocol `SRNE` ([#39](https://github.com/syssi/esphome-pace-bms/issues/39))
 
 ## Untested devices
