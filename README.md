@@ -21,6 +21,7 @@ This project implements the `PACE_MODBUS` protocol. Please use the RS485 port ne
 * SOK 100Ah 48V Server Rack Berry, PACE BMS P16S100A (`P16S100A-1B470-4.00`), using RS485 protocol `PACE_MODBUS` ([#38](https://github.com/syssi/esphome-pace-bms/discussions/38))
 * MeritSun / i-finity LFP 200 - 48V (Modbus must be enabled by pbmstool.exe) ([#29](https://github.com/syssi/esphome-pace-bms/issues/29))
 * Revov R100 51.2V 100Ah, PACE BMS P16S100A (`P16S100A-12720-4.05G`), using RS485 protocol `SRNE` ([#39](https://github.com/syssi/esphome-pace-bms/issues/39))
+* NPP 51.2v 280AH FLCD-30048 NSFG280F10/DS, PACE BMS P16S200A (`P16S200A-21452-2.02`) using RS485 protocol `PACE_MODBUS` ([#60](https://github.com/syssi/esphome-pace-bms/discussions/60))
 
 ## Untested devices
 
