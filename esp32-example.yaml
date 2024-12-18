@@ -1686,7 +1686,7 @@ text_sensor:
           "MOSFET overtemperature",        // 0001 0000 0000 0000 (13)
           "Environment overtemperature",   // 0010 0000 0000 0000 (14)
           "Environment undertemperature",  // 0100 0000 0000 0000 (15)
-          "Reserve (Bit 16)",              // 1000 0000 0000 0000 (16)
+          "Battery Full",                  // 1000 0000 0000 0000 (16)
       };
       std::string values = "";
 
