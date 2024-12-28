@@ -1,5 +1,7 @@
 # PBmsTools 2.4
 
+Caution: This document contains errors and is incomplete. More detailed information may be found here: https://github.com/nkinnan/esphome-pace-bms/blob/initial_commit/components/pace_bms/pace_bms_protocol_v25.h
+
 ## Realtime monitoring
 
 ### Get Analog Information
