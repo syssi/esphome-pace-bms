@@ -54,6 +54,15 @@ jobs:
             esphome config $YAML >/dev/null
           done
 
+      - name: Write multiple-batteries-example/secrets.yaml
+        shell: bash
+        run: 'echo -e "wifi_ssid: ssid\nwifi_password: password\nmqtt_host: host\nmqtt_username: username\nmqtt_password: password" > multiple-batteries-example/secrets.yaml'
+      - name: Validate multiple-batteries-example configurations
+        run: |
+          for YAML in multiple-batteries-example/esp*.yaml; do
+            esphome config $YAML >/dev/null
+          done
+
   esphome-compile:
     runs-on: ubuntu-latest
     needs: [esphome-config]
