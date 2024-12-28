@@ -160,7 +160,7 @@ binary_sensor:
     bitmask: 0x8000
 
 sensor:
-  # Current 
+  # Current
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Current"
@@ -188,7 +188,7 @@ sensor:
     filters:
       - multiply: 0.01
 
-  # Power 
+  # Power
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Power"
@@ -209,7 +209,7 @@ sensor:
       float total_voltage = (uint16_t)(data[2] << 8 | data[3] << 0);
       return current * total_voltage * 0.0001f;
 
-  # State of Charge 
+  # State of Charge
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} State of Charge"
@@ -221,7 +221,7 @@ sensor:
     state_class: measurement
     accuracy_decimals: 0
 
-  # State of Health 
+  # State of Health
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} State of Health"
@@ -232,7 +232,7 @@ sensor:
     state_class: measurement
     accuracy_decimals: 0
 
-  # Remaining Capacity 
+  # Remaining Capacity
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Remaining Capacity"
@@ -245,7 +245,7 @@ sensor:
     filters:
       - multiply: 0.01
 
-  # Full Capacity 
+  # Full Capacity
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Full Capacity"
@@ -258,7 +258,7 @@ sensor:
     filters:
       - multiply: 0.01
 
-  # Design Capacity 
+  # Design Capacity
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Design Capacity"
@@ -271,7 +271,7 @@ sensor:
     filters:
       - multiply: 0.01
 
-  # Charging Cycles 
+  # Charging Cycles
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Charging Cycles"
@@ -282,7 +282,7 @@ sensor:
     state_class: measurement
     accuracy_decimals: 0
 
-  # Warnings Bitmask 
+  # Warnings Bitmask
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Warnings Bitmask"
@@ -293,7 +293,7 @@ sensor:
     state_class: measurement
     accuracy_decimals: 0
 
-  # Protections Bitmask 
+  # Protections Bitmask
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Protections Bitmask"
@@ -304,7 +304,7 @@ sensor:
     state_class: measurement
     accuracy_decimals: 0
 
-  # Fault Status Bitmask 
+  # Fault Status Bitmask
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Fault Status Bitmask"
@@ -315,7 +315,7 @@ sensor:
     state_class: measurement
     accuracy_decimals: 0
 
-  # Balancer Status 
+  # Balancer Status
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Balancer Status"
@@ -635,7 +635,7 @@ sensor:
 
   ####
 
-  ### Temperatures for 
+  ### Temperatures for
 
   # 31  Battery temperature 1 (0.1 ℃ resolution)
   - platform: modbus_controller
@@ -733,7 +733,7 @@ number:
     address: 60
     register_type: holding
     value_type: U_WORD
-    min_value: 0.0 
+    min_value: 0.0
     max_value: 65535.0
     step: 1
     mode: box
