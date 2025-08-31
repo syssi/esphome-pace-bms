@@ -23,6 +23,7 @@ This project implements the `PACE_MODBUS` protocol. Please use the RS485 port ne
 * Revov R100 51.2V 100Ah, PACE BMS P16S100A (`P16S100A-12720-4.05G`), using RS485 protocol `SRNE` ([#39](https://github.com/syssi/esphome-pace-bms/issues/39))
 * NPP 51.2v 280AH FLCD-30048 NSFG280F10/DS, PACE BMS P16S200A (`P16S200A-21452-2.02`) using RS485 protocol `PACE_MODBUS` ([#60](https://github.com/syssi/esphome-pace-bms/discussions/60))
 * PowMr 51.2V 100Ah, PACE BMS P16S150A (`P16S150A-41034-1.00`), using RS485 protocol `PACE_MODBUS` ([#65](https://github.com/syssi/esphome-pace-bms/issues/65))
+* BSL Batt rack mount models B_LFP_48_100E_3U, B-LFP51V-125Ah & B-LFP48-135E-7kw  firmware version 1.51 (may work with other versions as well)  using RS485 protocol `PACE_MODBUS` 
 
 ## Untested devices
 
