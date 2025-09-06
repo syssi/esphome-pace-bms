@@ -236,6 +236,12 @@ The protocol is Modbus RTU via RS485.
 
 None.
 
+## Goodies
+
+### Video tutorial
+
+A user of this project ([@Sc00bs110](https://github.com/Sc00bs110)) created a comprehensive video tutorial that covers the complete installation and setup process for this project. The video provides step-by-step guidance to help users who might be encountering difficulties during setup. You can find the tutorial at: https://youtu.be/HlKNxRJbX3Y
+
 ## Debugging
 
 If this example doesn't work out of the box for your device please update your configuration to enable the debug output of the UART component and increase the log level to the see outgoing and incoming serial traffic:
