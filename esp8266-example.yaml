@@ -68,7 +68,7 @@ binary_sensor:
   #      Bit 8: Status: Charging operation
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} charging operation"
+    name: "charging operation"
     address: 11
     register_type: holding
     bitmask: 0x0100
@@ -76,7 +76,7 @@ binary_sensor:
   #      Bit 9: Status: Discharging operation
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} discharging operation"
+    name: "discharging operation"
     address: 11
     register_type: holding
     bitmask: 0x0200
@@ -84,7 +84,7 @@ binary_sensor:
   #      Bit 10: Status: Charging enabled/disabled
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} charging"
+    name: "charging"
     address: 11
     register_type: holding
     bitmask: 0x0400
@@ -92,7 +92,7 @@ binary_sensor:
   #      Bit 11: Status: Discharging enabled/disabled
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} discharging"
+    name: "discharging"
     address: 11
     register_type: holding
     bitmask: 0x0800
@@ -101,7 +101,7 @@ sensor:
   #   0  Current                               2 byte   R   int16  10mA (Positive: chargingm Negative: discharging)
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} current"
+    name: "current"
     address: 0
     register_type: holding
     value_type: S_WORD
@@ -115,7 +115,7 @@ sensor:
   #   1  Voltage of pack                       2 byte   R  uint16  10mV
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} total voltage"
+    name: "total voltage"
     address: 1
     register_type: holding
     value_type: U_WORD
@@ -128,7 +128,7 @@ sensor:
 
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} power"
+    name: "power"
     address: 0
     register_type: holding
     value_type: U_WORD
@@ -149,7 +149,7 @@ sensor:
   #   2  State of charge                       2 byte   R   uint8  % (0-100%)
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} state of charge"
+    name: "state of charge"
     address: 2
     register_type: holding
     value_type: U_WORD
@@ -161,7 +161,7 @@ sensor:
   #   3  SOH                                   2 byte   R   uint8  % (0-100%)
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} state of health"
+    name: "state of health"
     address: 3
     register_type: holding
     value_type: U_WORD
@@ -173,7 +173,7 @@ text_sensor:
   #   9  Warning flag                          2 byte   R  uint16  Hex See ^1
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} warnings"
+    name: "warnings"
     address: 9
     register_type: holding
     register_count: 1
@@ -218,7 +218,7 @@ text_sensor:
   #  10  Protection flag                       2 byte   R  uint16  Hex See ^2
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} protections"
+    name: "protections"
     address: 10
     register_type: holding
     register_count: 1
@@ -263,7 +263,7 @@ text_sensor:
   #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} faults"
+    name: "faults"
     address: 11
     register_type: holding
     register_count: 1
@@ -300,7 +300,7 @@ text_sensor:
   #  11  Status/Fault flag                     2 byte   R  uint16  Hex See ^3
   - platform: modbus_controller
     modbus_controller_id: bms0
-    name: "${name} status"
+    name: "status"
     address: 11
     register_type: holding
     register_count: 1
