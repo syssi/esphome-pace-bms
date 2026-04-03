@@ -396,12 +396,12 @@ x = apparently, garbage written by the firmware - it's not included in the PBmsT
 
 ## "System Configuration" tab
 
-There are many other settings in "System Configuration" that can be written and/or calibrated here, 
+There are many other settings in "System Configuration" that can be written and/or calibrated here,
 none of which I am exposing because it would be a Very Bad Idea to mess with them.
 
 "The charge limiter limits the charge current if it goes > 100A to 10A, this is useful for a multi-pack setup where the packs are not balanced"
 
-### Charge Current Limiter Start Current 
+### Charge Current Limiter Start Current
 
 ```
 >>> ~250046ED0000FD86\r
@@ -413,7 +413,7 @@ none of which I am exposing because it would be a Very Bad Idea to mess with the
 
 ### Charge Current Limiter Current Limit Gear Switch
 
-I don't know the exact amps values that correspond to "low" or "high", I believe one of them means "10 amps" from other documentation, 
+I don't know the exact amps values that correspond to "low" or "high", I believe one of them means "10 amps" from other documentation,
 but if the charge current limiter is activated due to pack SOC mismatch, this represents what the charge current will be limited to until it "catches up"
 
 ```
