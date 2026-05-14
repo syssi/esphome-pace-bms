@@ -26,6 +26,7 @@ This project implements the `PACE_MODBUS` protocol. Please use the RS485 port ne
 * BSL Batt B-LFP-48-100E 3U rack mount battery (firmware version 1.51) using RS485 protocol `PACE_MODBUS` ([#74](https://github.com/syssi/esphome-pace-bms/discussions/74))
 * BSL Batt B-LFP51V-125Ah rack mount battery (firmware version 1.51) using RS485 protocol `PACE_MODBUS` ([#74](https://github.com/syssi/esphome-pace-bms/discussions/74))
 * BSL Batt B-LFP48-135E-7kw rack mount battery (firmware version 1.51) using RS485 protocol `PACE_MODBUS` ([#74](https://github.com/syssi/esphome-pace-bms/discussions/74))
+* Docan Energy Panda KS48200-Ho21_V2, using RS485 protocol `SRNE` ([#83](https://github.com/syssi/esphome-pace-bms/issues/83))
 
 ## Untested devices
 
