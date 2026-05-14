@@ -181,6 +181,8 @@ sensor:
     address: 1
     register_type: holding
     value_type: U_WORD
+    # Workaround for syssi/esphome-pace-bms#90 / esphome/esphome#11925 - remove once esphome/esphome#11781 is merged
+    force_new_range: true
     unit_of_measurement: "V"
     device_class: voltage
     state_class: measurement
