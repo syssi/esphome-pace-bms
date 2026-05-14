@@ -1788,6 +1788,8 @@ text_sensor:
     register_type: holding
     register_count: 10
     response_size: 20
+    lambda: |-
+      return x.substr(0, x.find('\0'));
 
   # 160  Model SN                             20 byte  RW  uint16  ASCII BMS Manufacturer
   - platform: modbus_controller
@@ -1798,6 +1800,8 @@ text_sensor:
     register_type: holding
     register_count: 10
     response_size: 20
+    lambda: |-
+      return x.substr(0, x.find('\0'));
 
   # 170  PACK SN                              20 byte  RW  uint16  ASCII PACK Manufacturer
   - platform: modbus_controller
@@ -1808,3 +1812,5 @@ text_sensor:
     register_type: holding
     register_count: 10
     response_size: 20
+    lambda: |-
+      return x.substr(0, x.find('\0'));
