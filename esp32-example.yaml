@@ -345,6 +345,7 @@ sensor:
     name: "charging cycles"
     address: 7
     register_type: holding
+    register_count: 2
     value_type: U_WORD
     unit_of_measurement: ""
     state_class: measurement
@@ -391,6 +392,7 @@ sensor:
     name: "balancer status"
     address: 12
     register_type: holding
+    register_count: 3
     value_type: U_WORD
     unit_of_measurement: ""
     state_class: measurement
