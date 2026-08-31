@@ -8,7 +8,7 @@ esphome:
   name: ${name}
   friendly_name: ${name}
   comment: ${device_description}
-  min_version: 2024.6.0
+  min_version: 2026.9.0
 
 esp8266:
   board: d1_mini
@@ -40,13 +40,13 @@ modbus:
   - id: modbus0
     uart_id: uart_0
     send_wait_time: 200ms
+    turnaround_time: 200ms
 
 modbus_controller:
   - id: bms0
     # Slave address 0x01
     address: 0x01
     modbus_id: modbus0
-    command_throttle: 200ms
     update_interval: 10s
 
 sensor:
@@ -55,8 +55,7 @@ sensor:
     name: "read up to 119"
     address: 0
     register_type: holding
-    value_type: U_WORD
-    register_count: 119
+    value_type: RAW
     response_size: 238
     unit_of_measurement: ""
     accuracy_decimals: 0

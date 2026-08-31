@@ -181,8 +181,6 @@ sensor:
     address: 1
     register_type: holding
     value_type: U_WORD
-    # Workaround for syssi/esphome-pace-bms#90 / esphome/esphome#11925 - remove once esphome/esphome#11781 is merged
-    force_new_range: true
     unit_of_measurement: "V"
     device_class: voltage
     state_class: measurement
@@ -196,8 +194,7 @@ sensor:
     name: "${friendly_name} ${pack} Power"
     address: 0
     register_type: holding
-    value_type: U_WORD
-    register_count: 2
+    value_type: RAW
     response_size: 4
     unit_of_measurement: "W"
     device_class: power
@@ -279,7 +276,6 @@ sensor:
     name: "${friendly_name} ${pack} Charging Cycles"
     address: 7
     register_type: holding
-    register_count: 2
     value_type: U_WORD
     unit_of_measurement: ""
     state_class: measurement
@@ -324,7 +320,6 @@ sensor:
     name: "${friendly_name} ${pack} Balancer Status"
     address: 12
     register_type: holding
-    register_count: 3
     value_type: U_WORD
     unit_of_measurement: ""
     state_class: measurement
@@ -549,8 +544,7 @@ sensor:
     name: "${friendly_name} ${pack} Delta Cell Voltage"
     address: 15
     register_type: holding
-    value_type: U_WORD
-    register_count: 16
+    value_type: RAW
     response_size: 32
     unit_of_measurement: "V"
     device_class: voltage
@@ -1521,7 +1515,6 @@ text_sensor:
     name: "${friendly_name} ${pack} Warnings"
     address: 9
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -1566,7 +1559,6 @@ text_sensor:
     name: "${friendly_name} ${pack} Protections"
     address: 10
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -1611,7 +1603,6 @@ text_sensor:
     name: "${friendly_name} ${pack} Faults"
     address: 11
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -1648,7 +1639,6 @@ text_sensor:
     name: "${friendly_name} ${pack} Status"
     address: 11
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -1687,7 +1677,6 @@ text_sensor:
     skip_updates: 60
     address: 150
     register_type: holding
-    register_count: 10
     response_size: 20
     lambda: |-
       return x.substr(0, x.find_first_of(std::string("\x00\xff", 2)));
@@ -1700,7 +1689,6 @@ text_sensor:
     skip_updates: 60
     address: 160
     register_type: holding
-    register_count: 10
     response_size: 20
     lambda: |-
       return x.substr(0, x.find_first_of(std::string("\x00\xff", 2)));
@@ -1713,7 +1701,6 @@ text_sensor:
     skip_updates: 60
     address: 170
     register_type: holding
-    register_count: 10
     response_size: 20
     lambda: |-
       return x.substr(0, x.find_first_of(std::string("\x00\xff", 2)));
