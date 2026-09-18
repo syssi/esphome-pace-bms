@@ -9,7 +9,7 @@ esphome:
   name: ${name}
   friendly_name: ${name}
   comment: ${device_description}
-  min_version: 2024.6.0
+  min_version: 2026.9.0
   project:
     name: "syssi.esphome-pace-bms"
     version: 2.3.0
@@ -54,13 +54,13 @@ modbus:
     uart_id: uart_0
     flow_control_pin: ${flow_control_pin}
     send_wait_time: 200ms
+    turnaround_time: 200ms
 
 modbus_controller:
   - id: bms0
     # Slave address 0x01
     address: 0x01
     modbus_id: modbus0
-    command_throttle: 200ms
     update_interval: 10s
 
 binary_sensor:
@@ -248,8 +248,6 @@ sensor:
     address: 1
     register_type: holding
     value_type: U_WORD
-    # Workaround for syssi/esphome-pace-bms#90 / esphome/esphome#11925 - remove once esphome/esphome#11781 is merged
-    force_new_range: true
     unit_of_measurement: "V"
     device_class: voltage
     state_class: measurement
@@ -262,8 +260,7 @@ sensor:
     name: "power"
     address: 0
     register_type: holding
-    value_type: U_WORD
-    register_count: 2
+    value_type: RAW
     response_size: 4
     unit_of_measurement: "W"
     device_class: power
@@ -345,7 +342,6 @@ sensor:
     name: "charging cycles"
     address: 7
     register_type: holding
-    register_count: 2
     value_type: U_WORD
     unit_of_measurement: ""
     state_class: measurement
@@ -392,7 +388,6 @@ sensor:
     name: "balancer status"
     address: 12
     register_type: holding
-    register_count: 3
     value_type: U_WORD
     unit_of_measurement: ""
     state_class: measurement
@@ -617,8 +612,7 @@ sensor:
     name: "delta cell voltage"
     address: 15
     register_type: holding
-    value_type: U_WORD
-    register_count: 16
+    value_type: RAW
     response_size: 32
     unit_of_measurement: "V"
     device_class: voltage
@@ -1626,7 +1620,6 @@ text_sensor:
     name: "warnings"
     address: 9
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -1671,7 +1664,6 @@ text_sensor:
     name: "protections"
     address: 10
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -1716,7 +1708,6 @@ text_sensor:
     name: "faults"
     address: 11
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -1753,7 +1744,6 @@ text_sensor:
     name: "status"
     address: 11
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -1792,7 +1782,6 @@ text_sensor:
     skip_updates: 60
     address: 150
     register_type: holding
-    register_count: 10
     response_size: 20
     lambda: |-
       return x.substr(0, x.find_first_of(std::string("\x00\xff", 2)));
@@ -1805,7 +1794,6 @@ text_sensor:
     skip_updates: 60
     address: 160
     register_type: holding
-    register_count: 10
     response_size: 20
     lambda: |-
       return x.substr(0, x.find_first_of(std::string("\x00\xff", 2)));
@@ -1818,7 +1806,6 @@ text_sensor:
     skip_updates: 60
     address: 170
     register_type: holding
-    register_count: 10
     response_size: 20
     lambda: |-
       return x.substr(0, x.find_first_of(std::string("\x00\xff", 2)));

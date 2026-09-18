@@ -13,7 +13,7 @@ esphome:
   name: ${name}
   friendly_name: ${name}
   comment: ${device_description}
-  min_version: 2024.6.0
+  min_version: 2026.9.0
   project:
     name: "syssi.esphome-pace-bms"
     version: 2.3.0
@@ -56,13 +56,13 @@ modbus:
     uart_id: uart_0
     flow_control_pin: ${flow_control_pin}
     send_wait_time: 200ms
+    turnaround_time: 200ms
 
 modbus_controller:
   - id: bms0
     # Slave address 0x01
     address: 0x01
     modbus_id: modbus0
-    command_throttle: 200ms
     update_interval: 10s
 
 binary_sensor:
@@ -133,8 +133,7 @@ sensor:
     name: "power"
     address: 0
     register_type: holding
-    value_type: U_WORD
-    register_count: 2
+    value_type: RAW
     response_size: 4
     unit_of_measurement: "W"
     device_class: power
@@ -178,7 +177,6 @@ text_sensor:
     name: "warnings"
     address: 9
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -223,7 +221,6 @@ text_sensor:
     name: "protections"
     address: 10
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -268,7 +265,6 @@ text_sensor:
     name: "faults"
     address: 11
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
@@ -305,7 +301,6 @@ text_sensor:
     name: "status"
     address: 11
     register_type: holding
-    register_count: 1
     response_size: 2
     raw_encode: HEXBYTES
     lambda: |-
