@@ -1674,7 +1674,6 @@ text_sensor:
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Version Information"
     entity_category: diagnostic
-    skip_updates: 60
     address: 150
     register_type: holding
     response_size: 20
@@ -1686,7 +1685,6 @@ text_sensor:
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} BMS Serial Number"
     entity_category: diagnostic
-    skip_updates: 60
     address: 160
     register_type: holding
     response_size: 20
@@ -1698,7 +1696,6 @@ text_sensor:
     modbus_controller_id: ${modbus_controller_id}
     name: "${friendly_name} ${pack} Battery Serial Number"
     entity_category: diagnostic
-    skip_updates: 60
     address: 170
     register_type: holding
     response_size: 20
