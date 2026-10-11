@@ -1779,7 +1779,6 @@ text_sensor:
     modbus_controller_id: bms0
     name: "version information"
     entity_category: diagnostic
-    skip_updates: 60
     address: 150
     register_type: holding
     response_size: 20
@@ -1791,7 +1790,6 @@ text_sensor:
     modbus_controller_id: bms0
     name: "bms serial number"
     entity_category: diagnostic
-    skip_updates: 60
     address: 160
     register_type: holding
     response_size: 20
@@ -1803,7 +1801,6 @@ text_sensor:
     modbus_controller_id: bms0
     name: "battery pack serial number"
     entity_category: diagnostic
-    skip_updates: 60
     address: 170
     register_type: holding
     response_size: 20
