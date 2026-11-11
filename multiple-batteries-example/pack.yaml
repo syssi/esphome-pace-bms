@@ -1508,6 +1508,19 @@ number:
     step: 25.0
     mode: box
     unit_of_measurement: "ms"
+switch:
+  # 4101  Active balancer                      2 byte  RW  uint16  1: enabled, 0: disabled
+  #       Supported by newer firmware versions only (e.g. P16S100A-41047-2.01)
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${friendly_name} ${pack} Active Balancer"
+    use_write_multiple: true
+    address: 4101
+    register_type: holding
+    bitmask: 0x0001
+    entity_category: config
+    icon: "mdi:scale-balance"
+
 text_sensor:
   #   9  Warning flag                          2 byte   R  uint16  Hex See ^1
   - platform: modbus_controller

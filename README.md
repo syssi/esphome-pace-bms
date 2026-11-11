@@ -232,6 +232,7 @@ The protocol is Modbus RTU via RS485.
 |  150 | Version information                    |  20 | R   | uint16 | ASCII  |                                   |
 |  160 | Model SN                               |  20 | RW  | uint16 | ASCII  | BMS Manufacturer                  |
 |  170 | PACK SN                                |  20 | RW  | uint16 | ASCII  | PACK Manufacturer                 |
+| 4101 | Active balancer switch                 |   2 | RW  | uint16 |        | 1: on, 0: off (newer firmware)    |
 
 ## Known issues
 
